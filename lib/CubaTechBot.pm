@@ -1,8 +1,8 @@
-use strict;
-use warnings;
-
 package CubaTechBot;
 use parent 'Slack::RTM::Bot';
+
+use strict;
+use warnings;
 
 use Data::Dumper;
 

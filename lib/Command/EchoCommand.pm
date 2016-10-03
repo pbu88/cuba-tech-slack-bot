@@ -1,16 +1,18 @@
-package EchoCommand;
+package Command::EchoCommand;
+use parent 'Command::BaseCommand';
 
 use strict;
 use warnings;
 
 use Data::Dumper;
 
-
 sub new {
     my $class = shift;
-    my $self = {};
-
-    bless $self, $class;
+    my $self = $class->SUPER::new(
+        'name'        => 'echo',
+        'description' => 'echoes the rest of the line'
+    );
+    $self;
 }
 
 sub canProcess {
@@ -18,12 +20,13 @@ sub canProcess {
     my $msg = shift;
     my @words = split / /, $msg;
 
-    $words[0] eq 'echo'
+    $words[0] eq $self->name;
 }
 
 sub process {
     my $self = shift;
     my $msg = shift;
+    my $outputFn = shift;
 
     if (not $self->canProcess($msg)) {
         return;
@@ -31,8 +34,14 @@ sub process {
     
     my @words = split / /, $msg;
     shift @words;
+    
+    my $res = join ' ', @words;
 
-    join ' ', @words;
+    if ($outputFn) {
+        $outputFn->($res);
+    } else {
+        $res;
+    }
 }
 
 1;
