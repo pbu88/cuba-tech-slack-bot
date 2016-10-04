@@ -25,4 +25,15 @@ sub getPrivateMessageHandlers {
     @{$self->{pmHandlers}};
 }
 
+sub processMessage {
+    my $self = shift;
+    my $msg = shift;
+
+    foreach my $handler ($self->getPrivateMessageHandlers) {
+        if ($handler->canProcess($msg)) {
+            return $handler->process($msg);
+        }
+    }
+}
+
 1;
