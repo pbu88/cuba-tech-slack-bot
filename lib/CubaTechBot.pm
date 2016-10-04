@@ -4,7 +4,6 @@ use parent 'Slack::RTM::Bot';
 use strict;
 use warnings;
 
-use Data::Dumper;
 
 sub new {
     my ($class, @args) = @_;
@@ -26,7 +25,6 @@ sub _registerEvents {
             text => qr/.*/
         },
         sub {
-            print Dumper(@_);
             my ($response) = @_;
             if ($response->{user} ne 'paulo-bot') {
                 my $res = $self->processMessage($response);
@@ -51,6 +49,15 @@ sub addPrivateMessageHanlder {
     push @{$self->{pmHandlers}}, $h;
 }
 
+sub addPrivateMessageHanlders {
+    my $self = shift;
+    my @handlers = @_;
+
+    foreach my $h (@handlers) {
+        $self->addPrivateMessageHanlder($h);
+    }
+}
+
 sub getPrivateMessageHandlers {
     my $self = shift;
     @{$self->{pmHandlers}};
@@ -72,6 +79,16 @@ sub addCommandHandler {
 
     push @{$self->{commandHandlers}}, $h;
 }
+
+sub addCommandHandlers {
+    my $self = shift;
+    my @handlers = @_;
+
+    foreach my $h (@handlers) {
+        $self->addCommandHandler($h);
+    }
+}
+
 
 sub addGeneralHandler {
     my $self = shift;

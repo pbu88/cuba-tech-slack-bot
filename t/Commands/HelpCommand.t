@@ -13,28 +13,24 @@ my $cbt = CubaTechBot->new(
 my $helpCommand = Command::HelpCommand->new($cbt);
 my $echoCommand = Command::EchoCommand->new;
 
-$cbt->addPrivateMessageHanlder(
-    $echoCommand
-);
-$cbt->addPrivateMessageHanlder(
+$cbt->addPrivateMessageHanlders(
+    $echoCommand,
     $helpCommand
 );
 
-$cbt->addCommandHandler(
-    $echoCommand
-);
-$cbt->addCommandHandler(
+$cbt->addCommandHandlers(
+    $echoCommand,
     $helpCommand
 );
 
 ok($helpCommand);
 ok($helpCommand->name eq 'help');
 my $output = <<'END';
-Private Message Commands:
+*Private Message Commands:*
 echo - echoes the rest of the line
 help - prints this message
 
-Commands:
+*Commands:*
 robot echo - echoes the rest of the line
 robot help - prints this message
 END

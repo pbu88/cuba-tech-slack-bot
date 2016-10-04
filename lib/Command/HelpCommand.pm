@@ -32,12 +32,12 @@ sub process {
         return;
     }
 
-    my $res = "Private Message Commands:\n";
+    my $res = "*Private Message Commands:*\n";
     foreach my $handler ($self->{bot}->getPrivateMessageHandlers) {
         $res .= $handler->name . " - " . $handler->description . "\n";
     }
     
-    $res .= "\nCommands:\n";
+    $res .= "\n*Commands:*\n";
     foreach my $handler ($self->{bot}->getCommandHandlers) {
         $res .= $self->{bot}->nickname . " " .$handler->name . " - " . $handler->description . "\n";
     }
