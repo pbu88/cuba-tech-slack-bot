@@ -6,10 +6,10 @@ ok($echoCommand);
 ok($echoCommand->name eq 'echo');
 
 ok ($echoCommand->canProcess('echo hello'));
-ok (not $echoCommand->canProcess('othercmd hello'));
+ok (not $echoCommand->canProcess('othercmd echo hello'));
 
 ok ($echoCommand->process('echo hello') eq 'hello');
-ok (not $echoCommand->process('othercmd hello'));
+ok (not $echoCommand->process('othercmd echo hello'));
 
 sub callback {
     ok(shift eq 'hello');

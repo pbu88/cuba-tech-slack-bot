@@ -4,8 +4,6 @@ use parent 'Command::BaseCommand';
 use strict;
 use warnings;
 
-use Data::Dumper;
-
 sub new {
     my $class = shift;
     my $self = $class->SUPER::new(

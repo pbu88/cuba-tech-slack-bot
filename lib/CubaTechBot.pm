@@ -4,8 +4,6 @@ use parent 'Slack::RTM::Bot';
 use strict;
 use warnings;
 
-use Data::Dumper;
-
 sub new {
     my ($class, @args) = @_;
     my $self = $class->SUPER::new(@args);
