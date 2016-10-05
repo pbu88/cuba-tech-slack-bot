@@ -14,4 +14,6 @@ It's implemented with the idea of making it easy to add new commands and functio
     cpanm --installdeps .   # install the dependencies
     prove -l -r             # run the tests
     
+    cp sample-config.json config.json  # you need a config.json file. change the values inside
+    
 In order to run it, you will need change the values `config.json` file on the root directory with the actual values you want. The most important one is the `token` inside the `bot` section. It's needed to connect to a real Slack chat.
