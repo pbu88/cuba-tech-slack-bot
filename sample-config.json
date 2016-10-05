@@ -1,0 +1,6 @@
+{
+    "bot": {
+        "nickname": "sample-bot",
+        "token": "<token here>"
+    }
+}
