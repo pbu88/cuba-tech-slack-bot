@@ -1,5 +1,6 @@
 use Test::Simple tests => 15;
 use Command::NameVoteCommand;
+use Command::CommandInstruction;
 use Data::Dumper;
 
 my $tmpFileForTest = "/tmp/test-name-vote-command".time;
@@ -10,22 +11,40 @@ ok($nameCommand);
 
 ok($nameCommand->name eq 'name-vote');
 
-ok ($nameCommand->canProcess('name-vote register paulo'));
-ok ($nameCommand->canProcess('name-vote results'));
+my $ci = Command::CommandInstruction->new(
+    text =>'name-vote register paulo'
+);
+ok ($nameCommand->canProcess($ci));
+$ci = Command::CommandInstruction->new(
+    text =>'name-vote results'
+);
+ok ($nameCommand->canProcess($ci));
 ok (not -e $tmpFileForTest);  # file exists after registering
 
-ok ($nameCommand->process('name-vote register paulo') eq "name paulo was registered");
+$ci = Command::CommandInstruction->new(
+    text =>'name-vote register paulo'
+);
+ok ($nameCommand->process($ci) eq "name paulo was registered");
 ok ( -e $tmpFileForTest);  # file exists after registering
 ok ($nameCommand->results->{paulo} == 1);
-ok ($nameCommand->process('name-vote register paulo') eq "name paulo was registered");
+$ci = Command::CommandInstruction->new(
+    text =>'name-vote register paulo'
+);
+ok ($nameCommand->process($ci) eq "name paulo was registered");
 ok ($nameCommand->results->{paulo} == 2);
-ok ($nameCommand->process('name-vote register pepe') eq "name pepe was registered");
+$ci = Command::CommandInstruction->new(
+    text =>'name-vote register pepe'
+);
+ok ($nameCommand->process($ci) eq "name pepe was registered");
 ok ($nameCommand->results->{pepe} == 1);
 my $output = <<'END';
 paulo - 2
 pepe - 1
 END
-ok ($nameCommand->process('name-vote results') eq $output);
+$ci = Command::CommandInstruction->new(
+    text =>'name-vote results'
+);
+ok ($nameCommand->process($ci) eq $output);
     
 # test if the json file was saved correctly
 my $json_text = do {
@@ -47,4 +66,7 @@ $output = <<'END';
 paulo - 2
 pepe - 1
 END
-ok ($nameCommand1->process('name-vote results') eq $output);
+$ci = Command::CommandInstruction->new(
+    text =>'name-vote results'
+);
+ok ($nameCommand1->process($ci) eq $output);

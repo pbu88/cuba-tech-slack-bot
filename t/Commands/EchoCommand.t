@@ -1,17 +1,36 @@
 use Test::Simple tests => 7;
 use Command::EchoCommand;
+use Command::CommandInstruction;
 
-$echoCommand = Command::EchoCommand->new;
+use strict;
+use warnings;
+
+my $echoCommand = Command::EchoCommand->new;
 ok($echoCommand);
 ok($echoCommand->name eq 'echo');
 
-ok ($echoCommand->canProcess('echo hello'));
-ok (not $echoCommand->canProcess('othercmd echo hello'));
+my $ci = Command::CommandInstruction->new(
+    text => 'echo hello'
+);
+ok ($echoCommand->canProcess($ci));
+$ci = Command::CommandInstruction->new(
+    text => 'othercmd echo hello'
+);
+ok (not $echoCommand->canProcess($ci));
 
-ok ($echoCommand->process('echo hello') eq 'hello');
-ok (not $echoCommand->process('othercmd echo hello'));
+$ci = Command::CommandInstruction->new(
+    text => 'echo hello'
+);
+ok ($echoCommand->process($ci) eq 'hello');
+$ci = Command::CommandInstruction->new(
+    text => 'othercmd echo hello'
+);
+ok (not $echoCommand->process($ci));
 
 sub callback {
     ok(shift eq 'hello');
 }
-$echoCommand->process('echo hello', \&callback);
+$ci = Command::CommandInstruction->new(
+    text =>'echo hello'
+);
+$echoCommand->process($ci, \&callback);

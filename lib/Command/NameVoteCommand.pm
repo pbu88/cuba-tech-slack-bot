@@ -39,7 +39,8 @@ sub _readResultsFromFileIfExists {
 
 sub canProcess {
     my $self = shift;
-    my $msg = shift;
+    my $commandInstruction = shift;
+    my $msg = $commandInstruction->text;
     my @words = split / /, $msg;
 
     $words[0] eq $self->name;
@@ -47,10 +48,11 @@ sub canProcess {
 
 sub process {
     my $self = shift;
-    my $msg = shift;
+    my $commandInstruction = shift;
+    my $msg = $commandInstruction->text;
     my $outputFn = shift;
 
-    if (not $self->canProcess($msg)) {
+    if (not $self->canProcess($commandInstruction)) {
         return;
     }
     

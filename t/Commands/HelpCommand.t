@@ -34,4 +34,7 @@ help - prints this message
 robot echo - echoes the rest of the line
 robot help - prints this message
 END
-ok($helpCommand->process('help') eq $output);
+my $ci = Command::CommandInstruction->new(
+    text =>'help'
+);
+ok($helpCommand->process($ci) eq $output);

@@ -4,6 +4,7 @@ use parent 'Slack::RTM::Bot';
 use strict;
 use warnings;
 
+use Command::CommandInstruction;
 
 sub new {
     my ($class, @args) = @_;
@@ -115,10 +116,15 @@ sub isCommand {
 sub processPrivateMessage {
     my $self = shift;
     my $msg = shift;
+    
+    my $commandInstruction = Command::CommandInstruction->new(
+        text => $msg->{text},
+        user => $msg->{user}
+    );
 
     foreach my $handler ($self->getPrivateMessageHandlers) {
-        if ($handler->canProcess($msg->{text})) {
-            return $handler->process($msg->{text});
+        if ($handler->canProcess($commandInstruction)) {
+            return $handler->process($commandInstruction);
         }
     }
 }
@@ -137,11 +143,15 @@ sub processCommand {
     my @words = split / /, $msg->{text};
     shift @words;
     my $command = join ' ', @words;
-
+    
+    my $commandInstruction = Command::CommandInstruction->new(
+        text => $command,
+        user => $msg->{user}
+    );
 
     foreach my $handler ($self->getCommandHandlers) {
-        if ($handler->canProcess($command)) {
-            return $handler->process($command);
+        if ($handler->canProcess($commandInstruction)) {
+            return $handler->process($commandInstruction);
         }
     }
 }
@@ -149,10 +159,14 @@ sub processCommand {
 sub processGeneralMessage {
     my $self = shift;
     my $msg = shift;
+    my $commandInstruction = Command::CommandInstruction->new(
+        text => $msg->{text},
+        user => $msg->{user}
+    );
 
     foreach my $handler ($self->getGeneralHandlers) {
-        if ($handler->canProcess($msg->{text})) {
-            return $handler->process($msg->{text});
+        if ($handler->canProcess($commandInstruction)) {
+            return $handler->process($commandInstruction);
         }
     }
 }
