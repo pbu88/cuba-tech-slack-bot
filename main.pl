@@ -2,9 +2,7 @@ use CubaTechBot;
 use ConfigReader;
 use Command::EchoCommand;
 use Command::HelpCommand;
-
-use Data::Dumper;
-
+use Command::NameVoteCommand;
 
 my $config = ConfigReader->new(configFile => 'config.json');
 
@@ -20,7 +18,8 @@ $cbt->addPrivateMessageHanlders(
 
 $cbt->addCommandHandlers(
     Command::EchoCommand->new,
-    Command::HelpCommand->new($cbt)
+    Command::HelpCommand->new($cbt),
+    Command::NameVoteCommand->new(progressFile => 'votes.json')
 );
 
 $cbt->start_RTM;
