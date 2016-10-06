@@ -1,2 +1,2 @@
-require Slack::RTM::Bot
-require Test::Simple
+requires 'Slack::RTM::Bot';
+requires 'Test::Simple';
