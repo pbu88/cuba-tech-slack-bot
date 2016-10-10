@@ -28,11 +28,7 @@ sub _registerEvents {
         sub {
             my ($response) = @_;
             if ($response->{user} ne 'paulo-bot') {
-                my $res = $self->processMessage($response);
-                $self->say(
-                    channel => $response->{channel},
-                    text    => $res
-                );
+                $self->processMessage($response);
             }
         }
     );
@@ -122,7 +118,7 @@ sub _getCommandInstructionCallback {
         $self->say(
             channel => $msg->{channel},
             text    => $res
-        );
+        ) if $res && $res ne '';
 
     };
 }
