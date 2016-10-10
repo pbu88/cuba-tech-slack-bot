@@ -44,11 +44,7 @@ sub process {
         $res .= $self->{bot}->nickname . " " .$handler->name . " - " . $handler->description . "\n";
     }
     
-    if ($outputFn) {
-        $outputFn->($res);
-    } else {
-        $res;
-    }
+    $self->_output($res, $commandInstruction);
 }
 
 1;

@@ -19,4 +19,8 @@ sub user {
     shift->{user};
 }
 
+sub callback {
+    shift->{callback};
+}
+
 1;

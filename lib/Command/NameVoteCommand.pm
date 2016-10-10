@@ -81,11 +81,7 @@ sub process {
         $res = 'unknown action, please use *results* or *vote*'
     }
     
-    if ($outputFn) {
-        $outputFn->($res);
-    } else {
-        $res;
-    }
+    $self->_output($res, $commandInstruction);
 }
 
 sub outputResults {

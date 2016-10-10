@@ -113,13 +113,28 @@ sub isCommand {
     $words[0] eq $self->{nickname};
 }
 
+sub _getCommandInstructionCallback {
+    my $self = shift;
+    my $msg = shift;
+
+    sub {
+        my $res = shift;
+        $self->say(
+            channel => $msg->{channel},
+            text    => $res
+        );
+
+    };
+}
+
 sub processPrivateMessage {
     my $self = shift;
     my $msg = shift;
     
     my $commandInstruction = Command::CommandInstruction->new(
         text => $msg->{text},
-        user => $msg->{user}
+        user => $msg->{user},
+        callback => $self->_getCommandInstructionCallback($msg)
     );
 
     foreach my $handler ($self->getPrivateMessageHandlers) {
@@ -146,7 +161,8 @@ sub processCommand {
     
     my $commandInstruction = Command::CommandInstruction->new(
         text => $command,
-        user => $msg->{user}
+        user => $msg->{user},
+        callback => $self->_getCommandInstructionCallback($msg)
     );
 
     foreach my $handler ($self->getCommandHandlers) {
@@ -161,7 +177,8 @@ sub processGeneralMessage {
     my $msg = shift;
     my $commandInstruction = Command::CommandInstruction->new(
         text => $msg->{text},
-        user => $msg->{user}
+        user => $msg->{user},
+        callback => $self->_getCommandInstructionCallback($msg)
     );
 
     foreach my $handler ($self->getGeneralHandlers) {

@@ -22,4 +22,16 @@ sub name {
     $self->{name};
 }
 
+sub _output {
+    my $self = shift;
+    my $res = shift;
+    my $commandInstruction = shift;
+
+    if ($commandInstruction->callback) {
+        $commandInstruction->callback->($res);
+    } else {
+        $res;
+    }
+}
+
 1;

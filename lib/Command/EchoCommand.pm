@@ -26,7 +26,6 @@ sub process {
     my $self = shift;
     my $commandInstruction = shift;
     my $msg = $commandInstruction->text;
-    my $outputFn = shift;
 
     if (not $self->canProcess($commandInstruction)) {
         return;
@@ -37,11 +36,8 @@ sub process {
     
     my $res = join ' ', @words;
 
-    if ($outputFn) {
-        $outputFn->($res);
-    } else {
-        $res;
-    }
+    $self->_output($res, $commandInstruction);
+
 }
 
 1;

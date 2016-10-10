@@ -31,6 +31,7 @@ sub callback {
     ok(shift eq 'hello');
 }
 $ci = Command::CommandInstruction->new(
-    text =>'echo hello'
+    text =>'echo hello',
+    callback => \&callback
 );
 $echoCommand->process($ci, \&callback);
