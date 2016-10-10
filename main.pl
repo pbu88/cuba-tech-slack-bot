@@ -4,7 +4,8 @@ use Command::EchoCommand;
 use Command::HelpCommand;
 use Command::NameVoteCommand;
 
-my $config = ConfigReader->new(configFile => 'config.json');
+$configFile = @ARGV[0] or 'config.json';
+my $config = ConfigReader->new(configFile => $configFile);
 
 my $cbt = CubaTechBot->new(
     nickname => $config->configData->{bot}->{nickname},
