@@ -1,5 +1,5 @@
 use ImgflipAPI;
-use Test::Simple tests => 6;
+use Test::Simple tests => 4;
 use Mozilla::CA;
 
 use strict;
