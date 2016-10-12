@@ -3,6 +3,8 @@ use ConfigReader;
 use Command::EchoCommand;
 use Command::HelpCommand;
 use Command::NameVoteCommand;
+use Command::MemeGeneratorCommand;
+use ImgflipAPI;
 
 $configFile = @ARGV[0] or 'config.json';
 my $config = ConfigReader->new(configFile => $configFile);
@@ -20,7 +22,13 @@ $cbt->addPrivateMessageHanlders(
 $cbt->addCommandHandlers(
     Command::EchoCommand->new,
     Command::HelpCommand->new($cbt),
-    Command::NameVoteCommand->new(progressFile => 'votes.json')
+    Command::NameVoteCommand->new(progressFile => 'votes.json'),
+    Command::MemeGeneratorCommand->new(
+        ImgflipAPI->new(
+            username => $config->configData->{imgflip_api}->{username},
+            password => $config->configData->{imgflip_api}->{password}
+        )
+    )
 );
 
 $cbt->start_RTM;
