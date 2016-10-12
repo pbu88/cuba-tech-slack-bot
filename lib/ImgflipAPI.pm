@@ -18,7 +18,7 @@ my $captionImageAPIEndpoint = 'https://api.imgflip.com/caption_image';
 sub new {
     my $pkg = shift;
     my $args = {@_};
-    die 'username and password are requires' unless $args->{username} and $args->{password};
+    die 'username and password are required' unless $args->{username} and $args->{password};
     bless $args, $pkg
 }
 
