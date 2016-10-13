@@ -10,9 +10,9 @@ sub new {
     my ($class, @args) = @_;
     my $self = $class->SUPER::new(@args);
 
-    @{$self->{pmHandlers}} = ();
-    @{$self->{commandHandlers}} = ();
-    @{$self->{generalHandlers}} = ();
+    $self->{pmHandlers} = {};
+    $self->{commandHandlers} = {};
+    $self->{generalHandlers} = {};
 
     $self->_registerEvents;
 
@@ -43,7 +43,7 @@ sub addPrivateMessageHanlder {
     my $self = shift;
     my $h = shift;
 
-    push @{$self->{pmHandlers}}, $h;
+    $self->{pmHandlers}->{$h->name} = $h;
 }
 
 sub addPrivateMessageHanlders {
@@ -57,24 +57,24 @@ sub addPrivateMessageHanlders {
 
 sub getPrivateMessageHandlers {
     my $self = shift;
-    @{$self->{pmHandlers}};
+    values $self->{pmHandlers};
 }
 
 sub getCommandHandlers {
     my $self = shift;
-    @{$self->{commandHandlers}};
+    values $self->{commandHandlers};
 }
 
 sub getGeneralHandlers {
     my $self = shift;
-    @{$self->{generalHandlers}};
+    values $self->{generalHandlers};
 }
 
 sub addCommandHandler {
     my $self = shift;
     my $h = shift;
 
-    push @{$self->{commandHandlers}}, $h;
+    $self->{commandHandlers}->{$h->name} = $h;
 }
 
 sub addCommandHandlers {
@@ -91,7 +91,8 @@ sub addGeneralHandler {
     my $self = shift;
     my $h = shift;
 
-    push @{$self->{generalHandlers}}, $h;
+    $self->{generalHandlers}->{$h->name} = $h;
+
 }
 
 sub isPrivateMessage {

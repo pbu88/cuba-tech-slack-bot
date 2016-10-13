@@ -37,4 +37,4 @@ END
 my $ci = Command::CommandInstruction->new(
     text =>'help'
 );
-ok($helpCommand->process($ci) eq $output);
+ok((join '', (sort (split /\n/, $helpCommand->process($ci)))) eq (join '', (sort (split /\n/, $output))));
