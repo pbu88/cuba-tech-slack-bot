@@ -56,18 +56,16 @@ sub addPrivateMessageHanlders {
 }
 
 sub getPrivateMessageHandlers {
-    my $self = shift;
-    values $self->{pmHandlers};
+    shift->{pmHandlers};
 }
 
 sub getCommandHandlers {
-    my $self = shift;
-    values $self->{commandHandlers};
+    shift->{commandHandlers};
 }
 
 sub getGeneralHandlers {
     my $self = shift;
-    values $self->{generalHandlers};
+    $self->{generalHandlers};
 }
 
 sub addCommandHandler {
@@ -134,7 +132,7 @@ sub processPrivateMessage {
         callback => $self->_getCommandInstructionCallback($msg)
     );
 
-    foreach my $handler ($self->getPrivateMessageHandlers) {
+    foreach my $handler (values $self->getPrivateMessageHandlers) {
         if ($handler->canProcess($commandInstruction)) {
             return $handler->process($commandInstruction);
         }
@@ -162,7 +160,7 @@ sub processCommand {
         callback => $self->_getCommandInstructionCallback($msg)
     );
 
-    foreach my $handler ($self->getCommandHandlers) {
+    foreach my $handler (values $self->getCommandHandlers) {
         if ($handler->canProcess($commandInstruction)) {
             return $handler->process($commandInstruction);
         }
@@ -178,7 +176,7 @@ sub processGeneralMessage {
         callback => $self->_getCommandInstructionCallback($msg)
     );
 
-    foreach my $handler ($self->getGeneralHandlers) {
+    foreach my $handler (values $self->getGeneralHandlers) {
         if ($handler->canProcess($commandInstruction)) {
             return $handler->process($commandInstruction);
         }

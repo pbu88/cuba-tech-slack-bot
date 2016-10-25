@@ -23,4 +23,8 @@ sub callback {
     shift->{callback};
 }
 
+sub isPrivate {
+    shift->{isPrivate};
+}
+
 1;

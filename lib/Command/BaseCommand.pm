@@ -22,6 +22,11 @@ sub name {
     $self->{name};
 }
 
+sub help {
+    my $self = shift;
+    $self->{help} or $self->description;
+}
+
 sub _output {
     my $self = shift;
     my $res = shift;

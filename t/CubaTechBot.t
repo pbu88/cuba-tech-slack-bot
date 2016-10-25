@@ -19,11 +19,11 @@ $cbt = CubaTechBot->new(
 );
 ok($cbt);
 
-ok(scalar $cbt->getPrivateMessageHandlers == 0);
+ok(scalar values $cbt->getPrivateMessageHandlers == 0);
 
 $echoCmd = Command::EchoCommand->new;
 $cbt->addPrivateMessageHanlder($echoCmd);
-ok(scalar $cbt->getPrivateMessageHandlers == 1);
+ok(scalar values $cbt->getPrivateMessageHandlers == 1);
 
 $msg = bless {
     'type' => 'message',
@@ -53,7 +53,7 @@ ok($cbt->isCommand($msg));
 ok(not $cbt->isPrivateMessage($msg));
 
 $cbt->addCommandHandler($echoCmd);
-ok(scalar $cbt->getCommandHandlers == 1);
+ok(scalar values $cbt->getCommandHandlers == 1);
 $cbt->processMessage($msg);
 ok($cbt->{sayOutput} eq 'hello');
 $cbt->{sayOutput} = '';
@@ -71,6 +71,6 @@ ok(not $cbt->isCommand($msg));
 ok(not $cbt->isPrivateMessage($msg));
 
 $cbt->addGeneralHandler($echoCmd);
-ok(scalar $cbt->getGeneralHandlers == 1);
+ok(scalar values $cbt->getGeneralHandlers == 1);
 ok($cbt->processMessage($msg) eq 'hello');
 $cbt->{sayOutput} = '';

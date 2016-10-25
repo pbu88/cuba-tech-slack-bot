@@ -7,11 +7,18 @@ use Data::Dumper;
 use strict;
 use warnings;
 
+my $helpMsg = qq{
+Name Vote: name-vote <results|vote> <name to vote for ...>
+Examples:
+    name-vote results             # will show the results so far
+    name-vote vote awesome name   # will vote for "awesome name"
+};
+
 sub new {
     my $class = shift;
     my $self = $class->SUPER::new(
-        'name'        => 'name-vote',
-        'description' => 'a command to vote for a name to the bot (name-vote results will give you the results so far)'
+        name        => 'name-vote',
+        description => 'a command to vote for a name to the bot (name-vote results will give you the results so far)'
     );
 
     my %args = @_;

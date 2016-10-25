@@ -5,8 +5,15 @@ use strict;
 use warnings;
 
 my %templateNameToId = (
-    'batman-and-robin' => '80874672'
+    'batman-and-robin' => '80874672',
 );
+
+my @templateNamesForHelpCommand = join ', ', keys %templateNameToId;
+my $helpMsg = qq{
+Meme Generator: meme <template name> "<upper text>" "<lower text>"
+Templates available:
+@templateNamesForHelpCommand
+};
 
 sub new {
     my $class = shift;
@@ -14,7 +21,8 @@ sub new {
     die 'imgflip client is necessary' unless $imgflipClient;
     my $self = $class->SUPER::new(
         name        => 'meme',
-        description => 'generates a meme by querying to imgflip'
+        description => 'generates a meme by querying to imgflip',
+        help        => $helpMsg
     );
 
     $self->{imgflipClient} = $imgflipClient;

@@ -4,11 +4,17 @@ use parent 'Command::BaseCommand';
 use strict;
 use warnings;
 
+my $helpMsg = <<'END';
+Will repeat the rest of the line, ie:
+"echo hey what's up" will result in "hey what's up" being printed
+END
+
 sub new {
     my $class = shift;
     my $self = $class->SUPER::new(
-        'name'        => 'echo',
-        'description' => 'echoes the rest of the line'
+        name        => 'echo',
+        description => 'echoes the rest of the line',
+        help          => $helpMsg
     );
     $self;
 }
