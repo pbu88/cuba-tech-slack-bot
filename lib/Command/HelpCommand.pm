@@ -63,7 +63,6 @@ sub _generateCommandHelp {
 sub process {
     my $self = shift;
     my $commandInstruction = shift;
-    print Dumper($commandInstruction);
     my $msg = $commandInstruction->text;
     my $outputFn = shift;
 
